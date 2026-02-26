@@ -1,7 +1,8 @@
 # Artisan List Mine
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/ascend/artisan-list-mine.svg?style=flat-square)](https://packagist.org/packages/ascend/artisan-list-mine)
-[![Tests](https://github.com/ascend-digital/artisan-list-mine/actions/workflows/tests.yml/badge.svg)](https://github.com/ascend-digital/artisan-list-mine/actions/workflows/tests.yml)
+[![Tests](https://github.com/CWAscend/artisan-list-mine/actions/workflows/tests.yml/badge.svg)](https://github.com/CWAscend/artisan-list-mine/actions/workflows/tests.yml)
+[![Test Count](https://img.shields.io/badge/tests-11-brightgreen?style=flat-square)](https://github.com/CWAscend/artisan-list-mine/actions)
 [![PHP Version](https://img.shields.io/badge/php-%5E8.0-blue?style=flat-square)](composer.json)
 [![Laravel Version](https://img.shields.io/badge/laravel-9%20%7C%2010%20%7C%2011%20%7C%2012-red?style=flat-square)](composer.json)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)

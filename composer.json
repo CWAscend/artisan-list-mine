@@ -2,7 +2,7 @@
     "name": "ascend/artisan-list-mine",
     "description": "Filter artisan commands to show only your application commands",
     "keywords": ["laravel", "artisan", "console", "commands"],
-    "homepage": "https://github.com/ascend-digital/artisan-list-mine",
+    "homepage": "https://github.com/CWAscend/artisan-list-mine",
     "license": "MIT",
     "authors": [
         {
