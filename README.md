@@ -1,4 +1,4 @@
-# Laravel Artisan List Mine (Laravel)
+# Laravel Artisan List Mine
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/ascend/laravel-artisan-list-mine.svg?style=flat-square)](https://packagist.org/packages/ascend/laravel-artisan-list-mine)
 [![Tests](https://github.com/CWAscend/laravel-artisan-list-mine/actions/workflows/tests.yml/badge.svg)](https://github.com/CWAscend/laravel-artisan-list-mine/actions/workflows/tests.yml)
