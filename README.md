@@ -1,6 +1,6 @@
 # Artisan List Mine (Laravel)
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ascend/artisan-list-mine.svg?style=flat-square)](https://packagist.org/packages/ascend/artisan-list-mine)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ascend/laravel-artisan-list-mine.svg?style=flat-square)](https://packagist.org/packages/ascend/laravel-artisan-list-mine)
 [![Tests](https://github.com/CWAscend/artisan-list-mine/actions/workflows/tests.yml/badge.svg)](https://github.com/CWAscend/artisan-list-mine/actions/workflows/tests.yml)
 [![Test Count](https://img.shields.io/badge/tests-15-brightgreen?style=flat-square)](https://github.com/CWAscend/artisan-list-mine/actions)
 [![PHP Version](https://img.shields.io/badge/php-%5E8.0-blue?style=flat-square)](composer.json)
@@ -14,7 +14,7 @@ Ever used `php artisan list` to see what commands are available, or to remind yo
 ## Installation
 
 ```bash
-composer require ascend/artisan-list-mine
+composer require ascend/laravel-artisan-list-mine
 ```
 
 The package will automatically register itself via Laravel's package discovery.
