@@ -98,6 +98,8 @@ class ListCommand extends SymfonyListCommand
         $reflection = new ReflectionClass($command);
 
         foreach ($reflection->getProperties() as $property) {
+            $property->setAccessible(true);
+
             if (! $property->isInitialized($command)) {
                 continue;
             }
@@ -117,6 +119,7 @@ class ListCommand extends SymfonyListCommand
         $definition = $application->getDefinition();
         $reflection = new ReflectionClass($definition);
         $property = $reflection->getProperty('options');
+        $property->setAccessible(true);
         $options = $property->getValue($definition);
         unset($options[$name]);
         $property->setValue($definition, $options);
