@@ -12,7 +12,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ListCommand extends SymfonyListCommand
 {
-    private string $appNamespace;
+    /** @var array<string> */
+    private array $namespaces;
 
     private Application $laravel;
 
@@ -57,7 +58,10 @@ class ListCommand extends SymfonyListCommand
 
     private function executeWithMineFilter(InputInterface $input, OutputInterface $output): int
     {
-        $this->appNamespace = $this->laravel->getNamespace();
+        $this->namespaces = $this->laravel->make('config')->get(
+            'artisan-list-mine.namespaces',
+            [$this->laravel->getNamespace()]
+        );
         $application = $this->getApplication();
         $allCommands = $application->all();
         $hiddenStates = [];
@@ -84,13 +88,24 @@ class ListCommand extends SymfonyListCommand
 
     private function isApplicationCommand(Command $command): bool
     {
-        if (str_starts_with(get_class($command), $this->appNamespace)) {
+        if ($this->matchesNamespace(get_class($command))) {
             return true;
         }
 
         // Check for Laravel Actions or other decorator patterns where
-        // the command wraps an action/handler in the App namespace
+        // the command wraps an action/handler in a configured namespace
         return $this->hasApplicationHandler($command);
+    }
+
+    private function matchesNamespace(string $class): bool
+    {
+        foreach ($this->namespaces as $namespace) {
+            if (str_starts_with($class, $namespace)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private function hasApplicationHandler(Command $command): bool
@@ -106,7 +121,7 @@ class ListCommand extends SymfonyListCommand
 
             $value = $property->getValue($command);
 
-            if (is_object($value) && str_starts_with(get_class($value), $this->appNamespace)) {
+            if (is_object($value) && $this->matchesNamespace(get_class($value))) {
                 return true;
             }
         }

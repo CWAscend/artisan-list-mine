@@ -1,13 +1,15 @@
-# Artisan List Mine
+# Artisan List Mine (Laravel)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/ascend/artisan-list-mine.svg?style=flat-square)](https://packagist.org/packages/ascend/artisan-list-mine)
 [![Tests](https://github.com/CWAscend/artisan-list-mine/actions/workflows/tests.yml/badge.svg)](https://github.com/CWAscend/artisan-list-mine/actions/workflows/tests.yml)
-[![Test Count](https://img.shields.io/badge/tests-11-brightgreen?style=flat-square)](https://github.com/CWAscend/artisan-list-mine/actions)
+[![Test Count](https://img.shields.io/badge/tests-15-brightgreen?style=flat-square)](https://github.com/CWAscend/artisan-list-mine/actions)
 [![PHP Version](https://img.shields.io/badge/php-%5E8.0-blue?style=flat-square)](composer.json)
 [![Laravel Version](https://img.shields.io/badge/laravel-9%20%7C%2010%20%7C%2011%20%7C%2012-red?style=flat-square)](composer.json)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
-Filter artisan commands to show only your application commands, excluding vendor packages.
+Ever used `php artisan list` to see what commands are available, or to remind yourself of a command's signature, but found yourself trawling through the long list of built-in Laravel commands? Easily filter them out by only showing your own artisan commands with `php artisan list --mine`.
+
+![Terminal screenshot](assets/terminal.png)
 
 ## Installation
 
@@ -28,7 +30,7 @@ php artisan list --mine
 This filters out:
 - Built-in Laravel commands (`make:*`, `migrate`, etc.)
 - Commands from vendor packages
-- Any command not defined in your `App\` namespace
+- Any command not defined in your configured namespaces (default: `App\`)
 
 ### Example Output
 
@@ -51,12 +53,32 @@ Available commands:
   orders:process       Process pending orders
 ```
 
+## Configuration
+
+By default, commands in the `App\` namespace are considered application commands. If your project uses additional namespaces (e.g., `Domain\`, `Modules\`), publish the config file:
+
+```bash
+php artisan vendor:publish --tag=artisan-list-mine-config
+```
+
+Then edit `config/artisan-list-mine.php`:
+
+```php
+return [
+    'namespaces' => [
+        'App\\',
+        'Domain\\',
+        'Modules\\',
+    ],
+];
+```
+
 ## How It Works
 
 The package identifies "application commands" by:
 
-1. Checking if the command class is in the `App\` namespace
-2. Checking if the command has a handler/action in the `App\` namespace (for closure-based or action-based commands)
+1. Checking if the command class is in a configured namespace
+2. Checking if the command has a handler/action in a configured namespace (for closure-based or action-based commands)
 
 ## Requirements
 

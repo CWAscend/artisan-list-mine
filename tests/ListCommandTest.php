@@ -3,6 +3,7 @@
 namespace Ascend\ArtisanListMine\Tests;
 
 use App\Console\Commands\AppTestCommand;
+use Domain\Commands\DomainTestCommand;
 use Vendor\SomePackage\Commands\ActionWrappedCommand;
 use Vendor\SomePackage\Commands\VendorTestCommand;
 
@@ -16,6 +17,7 @@ class ListCommandTest extends TestCase
         $this->app->make('Illuminate\Contracts\Console\Kernel')->registerCommand(new AppTestCommand);
         $this->app->make('Illuminate\Contracts\Console\Kernel')->registerCommand(new VendorTestCommand);
         $this->app->make('Illuminate\Contracts\Console\Kernel')->registerCommand(new ActionWrappedCommand);
+        $this->app->make('Illuminate\Contracts\Console\Kernel')->registerCommand(new DomainTestCommand);
     }
 
     public function test_list_command_without_mine_shows_all_commands(): void
@@ -115,5 +117,45 @@ class ListCommandTest extends TestCase
         $this->artisan('list', ['--mine' => true])
             ->assertSuccessful()
             ->doesntExpectOutputToContain('vendor:test-command');
+    }
+
+    public function test_domain_command_is_hidden_by_default_with_mine(): void
+    {
+        // Domain commands are not in the default App\ namespace
+        $this->artisan('list', ['--mine' => true])
+            ->assertSuccessful()
+            ->doesntExpectOutputToContain('domain:test-command');
+    }
+
+    public function test_domain_command_is_shown_when_namespace_configured(): void
+    {
+        // Add Domain\ to configured namespaces
+        $this->app->make('config')->set('artisan-list-mine.namespaces', [
+            'App\\',
+            'Domain\\',
+        ]);
+
+        $this->artisan('list', ['--mine' => true])
+            ->assertSuccessful()
+            ->expectsOutputToContain('domain:test-command');
+    }
+
+    public function test_app_command_hidden_when_removed_from_config(): void
+    {
+        // Configure only Domain\ namespace, removing App\
+        $this->app->make('config')->set('artisan-list-mine.namespaces', [
+            'Domain\\',
+        ]);
+
+        $this->artisan('list', ['--mine' => true])
+            ->assertSuccessful()
+            ->expectsOutputToContain('domain:test-command')
+            ->doesntExpectOutputToContain('app:test-command');
+    }
+
+    public function test_config_file_can_be_published(): void
+    {
+        $this->artisan('vendor:publish', ['--tag' => 'artisan-list-mine-config'])
+            ->assertSuccessful();
     }
 }

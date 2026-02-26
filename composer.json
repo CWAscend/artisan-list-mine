@@ -29,6 +29,7 @@
             "Ascend\\ArtisanListMine\\Tests\\": "tests/",
             "App\\Console\\Commands\\": "tests/Fixtures/",
             "App\\Actions\\": "tests/Fixtures/",
+            "Domain\\Commands\\": "tests/Fixtures/",
             "Vendor\\SomePackage\\Commands\\": "tests/Fixtures/"
         }
     },
